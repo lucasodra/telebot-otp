@@ -18,15 +18,16 @@
     });
 
     app.post('/send', function (req, res) {
-        const {telegramId, code} = req.body;
+        console.log(req.body);
+        const { telegramId, code } = req.body;
 
-        bot.sendMessage(telegramId, code);
+        bot.sendMessage(telegramId, "OTP: " + code, {});
         res.status(200).send("ok");
     });
 
     var port = process.env.PORT || 3000;
     app.listen(port, function () {
-        console.log('Example app listening on port ' + process.env.PORT);
+        console.log('TELE OTP app listening on port ' + process.env.PORT);
     });
 
     bot.onText(/\/start/, (msg) => {
@@ -59,11 +60,12 @@
         console.log(`Received contact: ${contact.phone_number} ${contact.first_name}`);
 
         const dataToSend = {
+            token: process.env.SERVER_KEY,
             contact: contact.phone_number,
             telegramId: userId
           };
           
-        axios.post(process.env.SERVER_URL + '/linkTelegram', dataToSend)
+        axios.post(process.env.SERVER_URL, dataToSend)
             .then(response => {
             console.log('Data:', response.data);
             })

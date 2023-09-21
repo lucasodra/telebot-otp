@@ -11,6 +11,9 @@
     "type": "git",
     "url": "git+https://github.com/lucasodra/telebot_otp.git"
   },
+  "engines": {
+    "node": "14.x" 
+  },
   "keywords": [
     "telebot_otp",
     "telegram",
