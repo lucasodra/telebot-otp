@@ -1,0 +1,36 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Build Docker image
+      run: docker build -t telebot-otp .
+
+    - name: Push to AWS ECR
+      run: |
+        $(aws ecr get-login --region ap-southeast-1 --no-include-email)
+        docker tag telebot-otp:latest 059045899377.dkr.ecr.ap-southeast-1.amazonaws.com/telebot-otp:latest
+        docker push 059045899377.dkr.ecr.ap-southeast-1.amazonaws.com/telebot-otp:latest
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      
+    deploy:
+      needs: build
+      runs-on: ubuntu-latest
+      steps:
+        - name: Deploy to Kubernetes
+          run: |
+            kubectl set image deployment/telebot-otp telebot-otp=059045899377.dkr.ecr.ap-southeast-1.amazonaws.com/telebot-otp:latest
+          env:
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
