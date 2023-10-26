@@ -1,0 +1,10 @@
+Resources:
+  MyEKSCluster:
+    Type: AWS::EKS::Cluster
+    Properties:
+      ResourcesVpcConfig: 
+        SubnetIds:
+          - subnet-0e780421a0daf92bf
+          - subnet-032adaec6993c033a
+          - subnet-09b534c84b85b69e6
+      RoleArn: arn:aws:iam::059045899377:role/tixar-eks-role

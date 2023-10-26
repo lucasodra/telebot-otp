@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: telebot-otp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: telebot-otp
+  template:
+    metadata:
+      labels:
+        app: telebot-otp
+    spec:
+      containers:
+      - name: telebot-otp
+        image: 059045899377.dkr.ecr.ap-southeast-1.amazonaws.com/telebot-otp:latest
