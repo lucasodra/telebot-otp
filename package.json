@@ -11,9 +11,6 @@
     "type": "git",
     "url": "git+https://github.com/lucasodra/telebot_otp.git"
   },
-  "engines": {
-    "node": "20.x"
-  },
   "keywords": [
     "telebot_otp",
     "telegram",
@@ -31,7 +28,9 @@
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "node-telegram-bot-api": "^0.61.0",
+    "node-telegram-bot-api": "^0.61.0"
+  },
+  "devDependencies": {
     "nodemon": "^3.0.1"
   }
 }
